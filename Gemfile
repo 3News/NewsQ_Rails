@@ -49,3 +49,5 @@ end
 gem 'devise', '3.1.1'
 
 gem 'activeadmin', github: 'gregbell/active_admin'
+
+gem 'annotate', '2.5.0'
