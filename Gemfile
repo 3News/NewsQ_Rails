@@ -51,3 +51,9 @@ gem 'devise', '3.1.1'
 gem 'activeadmin', github: 'gregbell/active_admin'
 
 gem 'annotate', '2.5.0'
+
+gem 'nokogiri', '1.6.0'
+
+gem 'byebug', '2.2.2'
+
+gem 'w3c_validators', '1.2'
