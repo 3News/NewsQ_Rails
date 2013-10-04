@@ -47,3 +47,5 @@ end
 # gem 'debugger', group: [:development, :test]
 
 gem 'devise', '3.1.1'
+
+gem 'activeadmin', github: 'gregbell/active_admin'
