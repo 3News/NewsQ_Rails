@@ -1,6 +1,9 @@
 NewsQSpike::Application.routes.draw do
+  root 'feed_items#index'
+
+  get "feed_items/index"
+
   devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
   devise_for :users
-  root 'feeds#index'
+  ActiveAdmin.routes(self)
 end
