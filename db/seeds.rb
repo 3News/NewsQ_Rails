@@ -23,7 +23,6 @@ def parse_opml(file_path)
   doc = Nokogiri::XML(f)
   items = doc.xpath("//outline")
 
-  feeds = []
   items.each do |i|
     feed_url = i['xmlUrl']
     # if valid?(feed_url)
@@ -38,6 +37,21 @@ def parse_opml(file_path)
   f.close()
 end
 
-# tech
-tech_xml_path = File.join(Rails.root, "config/seed_data_for_feed", "tech_feed.xml")
-feed_items = parse_opml(tech_xml_path)
+# tech feed
+tech_xml_path = Rails.root.join("config/seed_data_for_feed", "tech_feed.xml")
+parse_opml(tech_xml_path)
+
+# tech feed items
+feeds = Feed.all
+feeds.each do |f|
+  begin
+    feed = Feedzirra::Feed.fetch_and_parse(f.url)
+    feed.entries.each do |e|
+      FeedItem.create(feed_id: f.id, title: e.title, author: e.author,
+        content: e.content, link: e.url, published_at: e.published)
+    end
+  rescue Exception => e
+    puts "error occured. #{f.url}"
+    next
+  end
+end

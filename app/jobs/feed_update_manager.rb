@@ -1,10 +1,8 @@
 class FeedUpdateManager
-
   @queue = :update_feeds_queue
 
   def self.perform()
-    @feeds = Feed.all
-    @feeds.each { |f| puts f.url }
+    feed_urls = Feed.all
+    feeds = Feedzirra::Feed.fetch_and_parse(feed_urls)
   end
-
 end
