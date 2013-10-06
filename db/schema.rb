@@ -57,6 +57,8 @@ ActiveRecord::Schema.define(version: 20131004075252) do
     t.datetime "updated_at"
   end
 
+  add_index "feed_items", ["feed_id"], name: "index_feed_items_on_feed_id"
+
   create_table "feeds", force: true do |t|
     t.string   "name"
     t.string   "url"
