@@ -57,3 +57,6 @@ gem 'nokogiri', '1.6.0'
 gem 'byebug', '2.2.2'
 
 gem 'w3c_validators', '1.2'
+
+gem 'resque', '1.24.1'
+gem 'resque-scheduler', '2.1.0', :require => 'resque_scheduler'
