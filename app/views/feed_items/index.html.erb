@@ -1,2 +1,21 @@
 <h1>실시간 글 목록</h1>
-<%= @feed_items.size %>
+
+<table>
+  <thead>
+    <tr>
+      <th>글 제목</th>
+      <th>글 저자</th>
+      <th>글 발행 시간</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @feed_items.each do |item| %>
+      <tr>
+        <td><%= link_to item.title, item.link %></td>
+        <td><%= item.author %></td>
+        <td><%= item.published_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
