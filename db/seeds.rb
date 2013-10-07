@@ -18,7 +18,7 @@ def valid?(feed_url)
   return results.errors.length == 0
 end
 
-def parse_opml(file_path)
+def parse_opml_and_save(file_path)
   f = File.open(file_path)
   doc = Nokogiri::XML(f)
   items = doc.xpath("//outline")
@@ -37,21 +37,26 @@ def parse_opml(file_path)
   f.close()
 end
 
-# tech feed
-tech_xml_path = Rails.root.join("config/seed_data_for_feed", "tech_feed.xml")
-parse_opml(tech_xml_path)
+# https://gist.github.com/pauldix/57285
+def parse_feed_and_save(feed_items)
+  feed_urls = feed_items.collect { |f| f.url }
+  feeds = Feedzirra::Feed.fetch_and_parse(feed_urls)
 
-# tech feed items
-feeds = Feed.all
-feeds.each do |f|
-  begin
-    feed = Feedzirra::Feed.fetch_and_parse(f.url)
-    feed.entries.each do |e|
+  feed_items.each do |f|
+    feed = feeds[f.url]
+    next if feed.is_a? Fixnum or feed.nil?
+
+    entries = feed.entries
+    entries.delete_if {|x| x == nil}
+
+    entries.each do |e|
       FeedItem.create(feed_id: f.id, title: e.title, author: e.author,
-        content: e.content, link: e.url, published_at: e.published)
+        content: e.content.nil? ? e.summary : e.content, link: e.url, published_at: e.published)
     end
-  rescue Exception => e
-    puts "error occured. #{f.url}"
-    next
   end
 end
+
+tech_xml_path = Rails.root.join("config/seed_data_for_feed", "tech_feed.xml")
+parse_opml_and_save(tech_xml_path)
+parse_feed_and_save(Feed.all)
+
