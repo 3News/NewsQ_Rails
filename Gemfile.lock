@@ -250,6 +250,7 @@ DEPENDENCIES
   jquery-rails (= 3.0.4)
   meta_request (= 0.2.8)
   nokogiri (= 1.6.0)
+  pry (= 0.9.6)
   pry-rails (= 0.2.0)
   rails (= 4.0.0)
   resque (= 1.24.1)
