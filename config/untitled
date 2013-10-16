@@ -1,0 +1,33 @@
+f = Feed.find(164)
+
+feed_instance = Feedzirra::Parser::Atom.new
+feed_instance.feed_url = f.url
+feed_instance.etag = f.etag
+feed_instance.last_modified = f.last_modified
+
+query_result = FeedItem.where("feed_id = ?", f.id).order('published_at desc').limit(1)
+entry = query_result.first
+if entry.link == nil
+  puts 'entry.link nil'
+end
+
+last_entry_instance = Feedzirra::Parser::AtomEntry.new
+last_entry_instance.url = entry.link
+
+feed_instance.entries = [last_entry_instance]
+
+feed_checker = Feedzirra::Feed.update(feed_instance)
+if feed_checker.respond_to?(new_entries)
+  entries = feed_checker.new_entries
+
+  if entries.size > 0
+    entries.each do |e|
+      FeedItem.create(feed_id: f.id, title: e.title, author: e.author,
+        content: e.content.nil? ? e.summary : e.content, link: e.url, published_at: e.published)
+    end
+
+    if f.etag != feed_checker.etag or f.last_modified != feed_checker.last_modified
+      f.update_attributes(etag: feed.etag, last_modified: feed.last_modified)
+    end
+  end
+end

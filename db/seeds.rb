@@ -46,6 +46,9 @@ def parse_feed_and_save(feed_items)
     feed = feeds[f.url]
     next if feed.is_a? Fixnum or feed.nil?
 
+    # update etag && last_modified
+    f.update_attributes(etag: feed.etag, last_modified: feed.last_modified)
+
     entries = feed.entries
     entries.delete_if {|x| x == nil}
 

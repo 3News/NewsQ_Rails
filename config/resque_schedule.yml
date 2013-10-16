@@ -1,5 +1,5 @@
 update_feeds:
-  every: 30m
+  every: 5m
   class: FeedUpdateManager
   args:
   description: Runs the perform method in FeedUpdateManager
