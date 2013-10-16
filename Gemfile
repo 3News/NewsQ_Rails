@@ -54,8 +54,6 @@ gem 'annotate', '2.5.0'
 
 gem 'nokogiri', '1.6.0'
 
-gem 'byebug', '2.2.2'
-
 gem 'w3c_validators', '1.2'
 
 gem 'resque', '1.24.1'
@@ -64,3 +62,11 @@ gem 'resque-scheduler', '2.1.0', :require => 'resque_scheduler'
 gem 'feedzirra', '0.0.24'
 
 gem 'will_paginate', '3.0.5'
+
+group :development do
+  gem 'byebug', '2.2.2'
+  gem "better_errors", '1.0.1'
+  gem "binding_of_caller", '0.7.2'
+  gem 'meta_request', '0.2.8'
+  gem 'pry-rails', '0.2.0'
+end
