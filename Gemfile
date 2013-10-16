@@ -62,3 +62,5 @@ gem 'resque', '1.24.1'
 gem 'resque-scheduler', '2.1.0', :require => 'resque_scheduler'
 
 gem 'feedzirra', '0.0.24'
+
+gem 'will_paginate', '3.0.5'
